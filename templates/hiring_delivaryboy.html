@@ -1,0 +1,54 @@
+{% load static %}
+<link type="text/css" rel="stylesheet" href="{% static 'dashboard.css'%}">
+    
+    
+    <header>
+        <h1>Courier Management Dashboard</h1>
+      <p><a href="{% url 'logout' %}">Logout</a></p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="{% url 'dashboard'%}">Dashboard</a></li>
+        <li><a href="{% url 'hire_deliveryboy'%}">Hire</a></li>
+            <li><a href="{% url 'report_manager'%}">Reports</a></li>
+        </ul>
+    </nav>
+    
+    <section>
+        <article>
+            <h2>{{branch.name|capfirst}} Branch Shipments</h2>
+        <table>
+            <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+            </tr>
+          {% for boys in deliveryboys%}
+          <tr>
+              <td>{{boys.id}}</td>
+              <td>{{boys.username|capfirst}}</td>
+              <td>{{boys.email|capfirst}}</td>
+          </tr>
+          {% endfor %}
+    
+        </table>
+        
+        </article>
+        
+        <article>
+            <h2>Client Information</h2>
+            <form method="post">
+          {%csrf_token%}
+                <label for="deliveryboy_email_id">Email Id:</label>
+                <input type="email" id="deliveryboy_email_id" name="deliveryboy_email">
+                <input type="submit" value="Save">
+            </form>
+        {{error}}
+        </article>
+    </section>
+    
+    <footer>
+        <p> Courier Management Dashboard</p>
+    </footer>
+    

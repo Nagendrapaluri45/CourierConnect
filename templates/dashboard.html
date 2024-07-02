@@ -1,0 +1,77 @@
+{% load static %}
+<link type="text/css" rel="stylesheet" href="{% static 'dashboard.css'%}">
+
+<header>
+	<h1>Courier Management Dashboard</h1>
+  <p><a href="{% url 'logout' %}">Logout</a></p>
+</header>
+
+<nav>
+	<ul>
+		<li><a href="{% url 'dashboard'%}">Dashboard</a></li>
+    <li><a href="{% url 'hire_deliveryboy'%}">Hire</a></li>
+		<li><a href="{% url 'report_manager'%}">Reports</a></li>
+	</ul>
+</nav>
+
+<section>
+	<article>
+		<h2>{{branch.name|capfirst}} Branch Shipments</h2>
+    <table>
+      <tr>
+				<th>Client</th>
+				<th>Destination</th>
+				<th>Status</th>
+        <th>Reached</th>
+        
+			</tr>
+      {% for courier in todays%}
+      <tr>
+        <td>{{courier.customer.username}}</td>
+          <td>{{courier.destination|capfirst}}</td>
+          <td>{{courier.status|capfirst}}</td>
+          <td>{{courier.created|timesince}} ago</td>
+      </tr>
+      {% endfor %}
+
+    </table>
+    <br>
+		<table>
+      
+			<tr>
+				<th>Client</th>
+				<th>Destination</th>
+				<th>Status</th>
+        <th>Delivered</th>
+        <th>Delivery_by</th>
+			</tr>
+
+      {% for courier in couriers %}
+        <tr>
+          <td>{{courier.customer.username}}</td>
+          <td>{{courier.destination|capfirst}}</td>
+          <td>{{courier.status|capfirst}}</td>
+          <td>{{courier.created|timesince}} ago</td>
+          <td>{{courier.delivery_by|capfirst}}</td>
+			  </tr>
+      {% endfor%}
+			
+		</table>
+	</article>
+	
+	<article>
+		<h2>Client Information</h2>
+		<form method="post">
+      {%csrf_token%}
+			<label for="client_name">Courier Id:</label>
+			<input type="text" id="client_id" name="client_id">
+
+			<input type="submit" value="Save">
+		</form>
+    {{error}}
+	</article>
+</section>
+
+<footer>
+	<p> Courier Management Dashboard</p>
+</footer>

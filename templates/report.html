@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tracker - Courier Management Dashboard</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link type="text/css" rel="stylesheet" href="{% static 'create_report.css'%}">
+</head>
+
+
+<style>
+   
+    
+</style>
+
+
+
+
+<body>
+	<header>
+		<h1>Courier Management Report</h1>
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+	</header>
+    <nav>
+        <ul>
+            <li><a href="{% url 'dashboard'%}">Dashboard</a></li>
+            <li><a href="report_manager">Reports</a></li>
+        </ul>
+    </nav>
+
+	<main>
+		<div class="tracker-container">
+			<h2>Reports</h2>
+			<div class="tracking-results">
+ 
+                <table>
+                    <tr>
+                              <th>Client</th>
+                              <th>Id</th>
+                              <th>Report</th>
+                      
+                          </tr>
+				<tr>
+                    {% for report in reports %}
+                        <td>{{report.customer.username}}</td>
+                        <td>{{report.courier.courier_id}}</td>
+                        <td>{{report.report}} </td>
+                      {% endfor %}
+                  </tr>
+                </table>
+
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<p>Courier Management Report</p>
+	</footer>
+
+</body>
+</html>

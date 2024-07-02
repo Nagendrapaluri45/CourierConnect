@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tracker - Courier Management Dashboard</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link type="text/css" rel="stylesheet" href="{% static 'tracker.css'%}">
+</head>
+
+
+
+
+
+
+<body>
+	<header>
+		<h1>Courier Management Tracker</h1>
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+	</header>
+
+	<main>
+		<div class="tracker-container">
+			<h2>Tracker</h2>
+
+			<form method="post">
+                 {% csrf_token %}
+				<label for="tracking-number">Tracking Number:</label>
+				<input type="text" id="tracking-number" name="tracking-number" placeholder="Enter the tracking number" required>
+
+				<button type="submit">Track</button>
+			</form>
+			
+			<div class="tracking-results">
+				<h3>Tracking Results</h3>
+                {% if tracker is none %}
+                <p>{{error}}</p>
+                {% else %}
+                <table>
+                    <tr>
+                              <th>Client</th>
+                              <th>Destination</th>
+                              <th>Status</th>
+                            <th>Reached</th>
+                            <th>Report</th>
+                      
+                          </tr>
+				<tr>
+                    <td>{{tracker.courier.customer.username}}</td>
+                      <td>{{tracker.courier.destination|capfirst}}</td>
+                      <td>{{tracker.courier.status|capfirst}}</td>
+                      <td>{{tracker.present}} </td>
+                      <td><a href="{% url 'create_reports' tracker.courier.courier_id %}">report</a></td>
+    
+                  </tr>
+                </table>
+                {% endif%}
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<p>Courier Management Tracker</p>
+	</footer>
+
+</body>
+</html>
